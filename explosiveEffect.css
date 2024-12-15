@@ -1,0 +1,74 @@
+#container{
+    margin-left:50px ;
+    grid-column: 4/9;
+    grid-row: 3/8;
+    
+}
+p{
+    
+    color: white;
+    font-size: calc(100vh / 9);
+    font-family: 'Roboto', sans-serif;
+    margin: 0rem;
+    text-transform: uppercase;
+}
+.line{
+    display: flex;
+    justify-content: space-between;
+}
+#text:has(.fancy:hover) .word:not(.fancy:hover) {
+    opacity:0.2;
+}
+.fancy > .letter{
+    display: inline-block;
+    transition:  transform 350ms ease;
+
+}
+.fancy:hover > .letter:nth-child(1){
+    transform: translate(0%,20%) rotate(43deg);
+}
+.fancy:hover > .letter:nth-child(2){
+    transform: translate(32%,0%) rotate(27deg);
+}
+.fancy:hover > .letter:nth-child(3){
+    transform: translate(80%,25%) rotate(65deg);
+}
+.fancy:hover > .letter:nth-child(4){
+    transform: translate(140%,80%) rotate(76deg);
+}
+.fancy:hover > .letter:nth-child(5){
+    transform: translate(-20%,-40%) rotate(51deg);
+}
+.fancy:hover > .letter:nth-child(6){
+    transform: translate(30%,-20%) rotate(23deg);
+}
+.fancy:hover > .letter:nth-child(7){
+    transform: translate(21%,10%) rotate(56deg);
+}
+.fancy:hover > .letter:nth-child(8){
+    transform: translate(30%,-15%) rotate(48deg);
+}
+.fancy:hover > .letter{
+    transition: 800ms;
+    color: #537FE7;
+}
+#links{
+    grid-column: 1/11;
+    grid-row: 1/2;
+    display: flex;
+    justify-content: space-evenly;
+    max-height:calc(10vh - 20px);
+    border-bottom: 1px white solid;
+}
+
+
+.avatar {
+    
+    grid-column: 2/4;
+    grid-row: 3/7;
+}
+.avatar img{
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+}

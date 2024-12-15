@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    background-color:#181823;
+    color: white;
+    grid-template-columns: repeat(10 , 10vw );
+    grid-template-rows: repeat(10 ,10vh);
+    margin: 0px;
+}
+#header{
+    grid-row: 1/2;
+    grid-column: 1/11;
+    background-color: #537FE7;
+    display: grid;
+    grid-template-rows:10vh ;
+    grid-template-columns: repeat(auto-fill ,  minmax(100px,1fr));
+    justify-content: start;
+    
+    
+
+}
+.icon{
+   grid-column: 1/2;
+   
+}
+#icon{
+    width:10vh ;
+    height:10vh;
+}
+.links{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    grid-column: 10/15;
+    font-size: 1.8em;
+    
+
+}
+
+
+
