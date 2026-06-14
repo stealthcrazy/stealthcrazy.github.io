@@ -1,0 +1,13 @@
+
+url: ""
+baseurl: ""
+title: "Sohan Prabhu"
+description: "Project blog"
+markdown: kramdown
+
+defaults:
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"

@@ -1,0 +1,14 @@
+<div id="cursor-dot"></div>
+<button id="hamburger" aria-label="Open menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+</button>
+<div id="menu">
+    <div class="links">
+        <a href="{{ '/' | relative_url }}" class="menu-link">Home</a>
+        {% for post in site.posts %}
+        <a href="{{ post.url | relative_url }}" class="menu-link">{{ post.title }}</a>
+        {% endfor %}
+    </div>
+</div>

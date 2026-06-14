@@ -1,0 +1,17 @@
+---
+layout: default
+---
+<div id="container">
+    <div class="blog-post">
+        <div class="header reveal">
+            <h1 class="title">{{ page.title }}</h1>
+            <div class="meta">
+                <span>{{ page.date | date: "%B %d, %Y" }}</span>
+                {% if page.tags %}<span>Tags: {{ page.tags | join: ", " }}</span>{% endif %}
+            </div>
+        </div>
+        <div class="content reveal">
+            {{ content }}
+        </div>
+    </div>
+</div>

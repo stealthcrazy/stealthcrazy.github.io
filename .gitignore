@@ -1,1 +1,5 @@
 /John_Wick_Avatar.png
+_site
+.jekyll-cache
+.bundle
+vendor

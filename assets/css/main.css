@@ -1,0 +1,388 @@
+/* =========================================================
+   Theme tokens
+========================================================= */
+:root {
+    --bg: #0a0a0a;
+    --bg-menu: rgb(15, 15, 15);
+    --text: blanchedalmond;
+    --text-muted: rgba(245, 235, 220, 0.8);
+    --text-faint: rgba(245, 235, 220, 0.5);
+    --accent-border: rgba(245, 235, 220, 0.2);
+    --code-bg: rgba(0, 0, 0, 0.4);
+    --btn-bg: rgba(245, 235, 220, 0.1);
+    --btn-border: rgba(245, 235, 220, 0.3);
+}
+
+[data-theme="light"] {
+    --bg: #f7f3ec;
+    --bg-menu: #f0ebe2;
+    --text: #3a3530;
+    --text-muted: rgba(58, 53, 48, 0.75);
+    --text-faint: rgba(58, 53, 48, 0.5);
+    --accent-border: rgba(58, 53, 48, 0.2);
+    --code-bg: rgba(0, 0, 0, 0.05);
+    --btn-bg: rgba(58, 53, 48, 0.08);
+    --btn-border: rgba(58, 53, 48, 0.25);
+}
+
+/* Seamless theme crossfade: every element that shows a themed
+   colour transitions its colour/background/border together. */
+*,
+*::before,
+*::after {
+    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}
+
+/* =========================================================
+   Base
+========================================================= */
+* {
+    cursor: none;
+    box-sizing: border-box;
+}
+
+html.no-custom-cursor,
+html.no-custom-cursor * {
+    cursor: auto;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100vh;
+    margin: 0;
+    background-color: var(--bg);
+}
+
+/* =========================================================
+   Custom cursor
+========================================================= */
+#cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--text);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: width 0.15s ease, height 0.15s ease, border-radius 0.15s ease,
+                background-color 0.5s ease;
+}
+
+#cursor-dot.hover {
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+}
+
+/* =========================================================
+   Hamburger + overlay menu
+   Animation keys off .is-open on the button itself (set in JS),
+   so it does NOT depend on DOM sibling order.
+========================================================= */
+#hamburger {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: none;
+    z-index: 1001;
+}
+
+.bar {
+    width: 28px;
+    height: 3px;
+    background-color: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.5s ease;
+    display: block;
+}
+
+#hamburger.is-open .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+#hamburger.is-open .bar:nth-child(2) {
+    opacity: 0;
+}
+#hamburger.is-open .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+#menu {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-menu);
+    clip-path: circle(0px at 40px 40px);
+    transition: clip-path 0.5s ease, background-color 0.5s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu.open {
+    clip-path: circle(150% at 40px 40px);
+}
+
+/* =========================================================
+   Home / hero
+========================================================= */
+#container {
+    margin: 0;
+    grid-column: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    height: fit-content;
+    width: 100%;
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 200;
+    color: var(--text);
+    text-align: center;
+}
+
+/* =========================================================
+   Typewriter
+========================================================= */
+[data-typewriter] {
+    white-space: pre-wrap;
+    min-height: 1em;
+    margin: 0;
+}
+
+[data-typewriter].typing::after {
+    content: '';
+    display: inline-block;
+    width: 0.55ch;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: var(--text);
+    animation: caret-blink 0.8s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+    0%, 50%   { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* =========================================================
+   Menu links
+========================================================= */
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu-link {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    padding: 10px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 32px;
+    font-weight: 200;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s;
+}
+
+.menu-link.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-link:hover {
+    color: var(--text-muted);
+}
+
+/* =========================================================
+   Blog post
+========================================================= */
+.blog-post {
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: var(--text);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--accent-border);
+    padding-bottom: 20px;
+}
+
+.title {
+    font-size: 4em;
+    margin: 0 0 15px 0;
+    color: var(--text);
+    font-weight: 300;
+}
+
+.meta {
+    font-size: 1rem;
+    color: var(--text-faint);
+    display: flex;
+    gap: 20px;
+}
+
+.content {
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: var(--text);
+}
+
+.content p { margin-bottom: 20px; font-size: 1rem; }
+
+.content h2 {
+    font-size: 1.8em;
+    margin: 30px 0 15px 0;
+    color: var(--text);
+    font-weight: 300;
+}
+
+.content blockquote {
+    margin: 25px 0;
+    padding: 20px;
+    border-left: 4px solid var(--text);
+    background: var(--accent-border);
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+    color: var(--text);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.show {
+    font-size: 1.2rem;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.post-image { margin: 30px 0; text-align: center; }
+
+.post-image img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--accent-border);
+    border-radius: 4px;
+}
+
+.post-image figcaption {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-faint);
+}
+
+/* =========================================================
+   Code blocks
+========================================================= */
+.code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 4px;
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--text);
+    margin: 20px 0;
+    position: relative;
+}
+
+.code-block code {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text);
+}
+
+.copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    color: var(--text);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: none;
+    font-family: 'Courier New', monospace;
+}
+
+/* =========================================================
+   Floating controls
+========================================================= */
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    color: var(--text);
+    border-radius: 50%;
+    cursor: none;
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+#anim-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    color: var(--text);
+    border-radius: 4px;
+    cursor: none;
+    z-index: 1002;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* =========================================================
+   Reduced motion
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+    [data-typewriter].typing::after { display: none; }
+}
+
+/* =========================================================
+   Responsive
+========================================================= */
+@media (max-width: 768px) {
+    .blog-post { padding: 20px 15px; }
+    .title { font-size: 2em; }
+    .meta { flex-direction: column; gap: 5px; }
+    .line { font-size: 28px; }
+}
