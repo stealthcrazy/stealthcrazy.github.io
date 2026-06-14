@@ -217,7 +217,7 @@ body {
 ========================================================= */
 .blog-post {
     max-width: 1500px;
-    margin: 0 auto;
+    margin: auto auto;
     padding: 40px 20px;
     color: var(--text);
     font-family: 'Courier New', Courier, monospace;
