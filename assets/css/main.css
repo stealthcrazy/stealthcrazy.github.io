@@ -249,7 +249,7 @@ body {
     color: var(--text);
 }
 
-.content p { margin-bottom: 20px; font-size: 1rem; }
+.content p { margin-bottom: 20px; font-size: 1.2rem; }
 
 .content h2 {
     font-size: 1.8em;
@@ -366,20 +366,16 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 .katex-display {
-    font-size: 1em;          /* was ~1.21em default; matches body */
+    font-size: 0.75em;          /* was ~1.21em default; matches body */
     overflow-x: auto;         /* wide equations scroll instead of overflowing */
     overflow-y: hidden;
     padding: 4px 0;
 }
 
 .katex {
-    font-size: 1em;           /* inline math matches surrounding text */
+    font-size: 0.75em;           /* inline math matches surrounding text */
 }
 
-/* optional: a touch smaller if still large on mobile */
-@media (max-width: 768px) {
-    .katex-display { font-size: 0.85em; }
-}
 
 /* =========================================================
    Reduced motion
