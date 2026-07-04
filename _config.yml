@@ -5,7 +5,7 @@ title: "Sohan Prabhu"
 description: "Project blog"
 markdown: kramdown
 kramdown:
-  math_engine: mathjax
+  math_engine: null
 defaults:
   - scope:
       path: "_posts"
