@@ -365,6 +365,21 @@ body {
     font-size: 12px;
     font-family: 'Courier New', Courier, monospace;
 }
+.katex-display {
+    font-size: 1em;          /* was ~1.21em default; matches body */
+    overflow-x: auto;         /* wide equations scroll instead of overflowing */
+    overflow-y: hidden;
+    padding: 4px 0;
+}
+
+.katex {
+    font-size: 1em;           /* inline math matches surrounding text */
+}
+
+/* optional: a touch smaller if still large on mobile */
+@media (max-width: 768px) {
+    .katex-display { font-size: 0.85em; }
+}
 
 /* =========================================================
    Reduced motion
