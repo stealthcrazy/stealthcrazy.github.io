@@ -52,7 +52,9 @@ Using Bayes Rule we can write
 $$
  p_{\theta}(x_{0}) =  \frac{p_{\theta}(x_{0:T})}{p_{\theta}(x_{1:T}|x_{0})}
 $$
+
 and after substituting Back into (3) and then multiplying by $\frac{q(x_{1:T}|x_{0})}{q(x_{1:T}|x_{0})}$ we get
+
 $$
 
 \begin{aligned}  \\
