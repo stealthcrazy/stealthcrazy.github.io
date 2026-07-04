@@ -4,8 +4,11 @@ baseurl: ""
 title: "Sohan Prabhu"
 description: "Project blog"
 markdown: kramdown
+markdown: kramdown
 kramdown:
-  math_engine: null
+  input: kramdown
+  math_engine: mathjax
+  parse_block_html: false
 defaults:
   - scope:
       path: "_posts"
