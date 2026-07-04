@@ -83,11 +83,11 @@ $$
 This fact then can be used to relate $\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$ with ELBO and KL divergence as follows by rearranging
 
 $$
-\begin{aligned} \\ \\
- \mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]   - \:ELBO &=  \: D_{KL}(q(x_{1:T}|x_{0})\: || \: p_{\theta}(x_{1:T}|x_{0})) \:  \\ 
-\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]   - \:ELBO &\geq 0 \\
-\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]   &\geq ELBO \\
-\end{aligned} \qquad (3d)
+	\begin{aligned} \\ \\
+	\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]   - \:ELBO &=  \: D_{KL}(q(x_{1:T}|x_{0})\: || \: p_{\theta}(x_{1:T}|x_{0})) \:  \\ 
+	\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]   - \:ELBO &\geq 0 \\
+	\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]   &\geq ELBO \\
+	\end{aligned} \qquad (3d)
 $$
 
 The gap between $\mathbb{E}_{q(x_{1:T}|x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$ and ELBO is defined as the tightness of the bound. Additionally since the KL Divergence determines the distance between the prior (Q) and posterior (P) distributions the tighter the bound the better it approximates between the two distributions. This can be done by Maximising the ELBO. However we can do a trick to instead minimise the bound by multiplying by a negative sign. This makes it easier in PyTorch to Train 
