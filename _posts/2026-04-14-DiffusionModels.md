@@ -74,7 +74,7 @@ Having that sorted we can now move on to the following start:
 
 $$
 
-\begin{aligned}  \\ 
+\begin{aligned}  \\ 
  \log(\: p_{\theta}(x_{0})\:)  & =  log(\: p_{\theta}(x_{0})) \cdot \int q(x_{1:T}) \: dx_{1:T} \\
  &= \int log(\: p_{\theta}(x_{0})) \cdot q(x_{1:T}) \: dx_{1:T}  \\  
  &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]  \qquad \qquad \\
@@ -96,7 +96,7 @@ and after substituting Back into (3) and then multiplying by $\frac{q(x_{1:T} \m
 
 $$
 
-\begin{aligned}  \\
+\begin{aligned}  \\
  &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T})}{p_{\theta}(x_{1:T} \mid x_{0})} \cdot \frac{q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0})} )\:]  \\ \\
  &=\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) \cdot q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0}) \cdot p_{\theta}(x_{1:T} \mid x_{0})} )\:] 
 \end{aligned} \qquad (3b) 
@@ -109,7 +109,7 @@ To Further simplify we can split Expectation into two terms
 
 $$
 
-\begin{aligned}  \\
+\begin{aligned}  \\
  &=\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} +\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{q(x_{1:T} \mid x_{0}) }{p_{\theta}(x_{1:T} \mid x_{0})})\:] }_{D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0}))} \\ \\ 
  &=\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} + D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0}))
 \end{aligned} \qquad (3c)
@@ -384,7 +384,7 @@ Now we can write the following which gets a bit intense and long.
 $$
 
 
-\small{
+
 
 \begin{aligned}
 
@@ -405,28 +405,28 @@ $$
 	\text{Completing the square}\\
 	K_{2}&= x_{t-1}^2 -2x_{t-1}\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)\\
 	&= \underbrace{ \left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2}_{K_{4}} \underbrace{-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)^2}_{K_{5}} \\
-\end{aligned}}
+\end{aligned}
 
 $$
 
 
 $$
 
-{\small
+
 
 \begin{aligned}
 \text{Expanding K5} &\\
 K_{5} &=-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)^2 \\
 &= - \left( \frac{ \alpha_{t} (1-\bar{\alpha_{t-1}})^2 x_{t}^2+\bar{\alpha_{t-1}} (1-\alpha_{t})^2x_{0}^2 - 2(\sqrt{ \alpha_{t} \bar{\alpha_{t-1}} }(1-\alpha_{t})(1-\bar{\alpha_{t-1}})x_{t}x_{0})}{{(1-\bar{\alpha_{t}}})^2} \right) \\
 \end{aligned}
-}
-
-$$
 
 
 $$
 
-\small{
+
+$$
+
+
 
 \begin{aligned}
 \text{Expanding K3} \\ 
@@ -443,7 +443,7 @@ K_{3}  &= \left[x_{t}^2\left( \frac{1}{1-\alpha_{t}}-\frac{1}{1-\bar{\alpha_{t}}
 
 
 \end{aligned}
-}
+
 
 $$
 
@@ -451,14 +451,14 @@ The coefficients in K3 are same for K5 and hence $K_{3}+K_{5} = 0$ . Therefore w
 
 $$
 
-\small{
+
 \begin{aligned}
 	H_{2} &=  \left( \frac{1-\bar{\alpha_{t}}}{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})} \right)\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \\
 	&= \frac{1}{
 	\left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)
 	}
 	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \\
-\end{aligned}}
+\end{aligned}
 
 $$
 
@@ -466,15 +466,15 @@ We can now write the following:
 
 $$
 
-\small{
+
 \begin{aligned}
 	q(x_{t-1}\mid x_{t},x_{0}) &=  \frac{1}{\sqrt{ \left( \frac{2\pi (1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{(1-\bar{\alpha_{t}})}  \right)^k }}\exp\left(     \frac{-1}{
 	2\left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)
 	} \cdot
-	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \right)
+	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \right) 
 	
 \end{aligned}
-}
+
 
 $$
 
@@ -530,7 +530,7 @@ $$
 
 $$
 
-\small{
+
 \begin{aligned}
 &\\
 	
@@ -539,7 +539,7 @@ $$
     &=\frac{1}{2}\left[ \frac{\lvert \lvert \mu_{\theta}(x_{t},t)-\tilde{\mu}_{t}(x_{t},x_{0}) \rvert  \rvert^2 }{\sigma^2}\right] \\ 
 
 
-\end{aligned} }
+\end{aligned} 
 
 
 $$
@@ -559,7 +559,7 @@ Here $\epsilon_{\theta}$ is the noise the model predicts for the reverse process
 
 $$
 
-\small{
+
 \begin{aligned}
 	\frac{1}{2}\left[ \frac{\lvert \lvert \mu_{\theta}(x_{t},t)-\tilde{\mu}_{t}(x_{t},x_{0} \rvert  \rvert^2 }{\sigma^2}\right] &= \frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert  \tilde{\mu_{t}}\left(x_{t}, \frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon_{\theta})\right]\right)-\tilde{\mu}_{t}(x_{t},\frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon)\right])  \right\rvert   \right\rvert^2 \right] (6a) \\ \\
 
@@ -578,7 +578,7 @@ $$
 &=\frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert \frac{\beta_{t}}{\sqrt{ \alpha_{t} }\cdot\sqrt{ 1-\bar{\alpha_{t}} }}(\epsilon-\epsilon_{\theta})  \right\rvert   \right\rvert^2 \right] \\
 &=\frac{\beta_{t}^2}{2\sigma^2 \alpha_{t} (1-\bar{\alpha}_{t})}\left\lvert  \left\lvert (\epsilon-\epsilon_{\theta})  \right\rvert   \right\rvert^2 
 	
-\end{aligned}}
+\end{aligned}
 
 
 $$
