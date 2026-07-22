@@ -4,10 +4,9 @@ baseurl: ""
 title: "Sohan Prabhu"
 description: "Project blog"
 markdown: kramdown
-markdown: kramdown
 kramdown:
-  input: kramdown
   math_engine: null
+  input: GFM
 defaults:
   - scope:
       path: "_posts"
