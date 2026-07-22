@@ -74,7 +74,7 @@ Having that sorted we can now move on to the following start:
 
 $$
 
-\begin{aligned}  \\ 
+\begin{aligned}  \\ 
  \log(\: p_{\theta}(x_{0})\:)  & =  log(\: p_{\theta}(x_{0})) \cdot \int q(x_{1:T}) \: dx_{1:T} \\
  &= \int log(\: p_{\theta}(x_{0})) \cdot q(x_{1:T}) \: dx_{1:T}  \\  
  &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]  \qquad \qquad \\
@@ -96,7 +96,7 @@ and after substituting Back into (3) and then multiplying by $\frac{q(x_{1:T} \m
 
 $$
 
-\begin{aligned}  \\
+\begin{aligned}  \\
  &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T})}{p_{\theta}(x_{1:T} \mid x_{0})} \cdot \frac{q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0})} )\:]  \\ \\
  &=\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) \cdot q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0}) \cdot p_{\theta}(x_{1:T} \mid x_{0})} )\:] 
 \end{aligned} \qquad (3b) 
@@ -109,7 +109,7 @@ To Further simplify we can split Expectation into two terms
 
 $$
 
-\begin{aligned}  \\
+\begin{aligned}  \\
  &=\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} +\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{q(x_{1:T} \mid x_{0}) }{p_{\theta}(x_{1:T} \mid x_{0})})\:] }_{D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0}))} \\ \\ 
  &=\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} + D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0}))
 \end{aligned} \qquad (3c)
@@ -471,7 +471,7 @@ $$
 	q(x_{t-1}\mid x_{t},x_{0}) &=  \frac{1}{\sqrt{ \left( \frac{2\pi (1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{(1-\bar{\alpha_{t}})}  \right)^k }}\exp\left(     \frac{-1}{
 	2\left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)
 	} \cdot
-	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \right) 
+	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \right)
 	
 \end{aligned}
 }
