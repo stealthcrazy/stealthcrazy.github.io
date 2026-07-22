@@ -4,24 +4,24 @@ In this Post , I will be  documenting my journey researching Diffusion Models fo
 
 To Begin, Diffusion Models are categorised as Latent variable Models of the form below
 $$
-\begin{align}
+\begin{aligned}
 	p_{\theta}(x_{0}) := \int p_{\theta}(x_{0:T}) \; dx_{1:T} \qquad (1a)
-\end{align}
+\end{aligned}
 $$
 Here $x_{1} \dots x_{T}$ are known as the Latents which have the same dimensions as the data/ image we begin with ($x_{0}$).Moving on, $p_{\theta}(x_{0:T})$ is a joint distribution of all the latents and is referred to as the reverse process.  Specifically Equation 1 states  that to get back original $p_{\theta}(x_{0})$ we should integrate over all latents to eliminate the from the joint distribution $p_{\theta}(x_{0:T})$ which is intractable . Additionally the reverse process is a Markov Chain with learnt transitions( Gaussian based ) starting at $p(x_{T}) = \mathcal{N}(x_{T};0,I)$ so can be defined as the following
 $$
-\begin{align}
+\begin{aligned}
 p_{\theta}(x_{0:T}) = p(x_{T})\prod_{t = 1} ^T p_{\theta}(x_{t-1} \mid x_{t}) \quad \quad (1b)  \\ 
 p_{\theta}(x_{t-1} \mid x_{t}) =\mathcal{ N}(x_{t-1} ;\; \mu_{\theta}( x_{t},t) \:,\: \Sigma_{\theta}( x_{t},t) \: ) \quad (1c)
-\end{align}
+\end{aligned}
 $$
 The key differentiator for a diffusion model to that of a latent is the forward process ( Diffusion ) which is a fixed Markov chain that repeatedly adds noise to the data/image. The forward process is analogous to brownian motion in the idea that the image gets noisier with each time step in the forward diffusion process due to the variance scheduling of $\beta_{1} \dots \beta_{T}$ .  Below in Equation 2a is the definition of the forward process .
 
 $$
-\begin{align}
+\begin{aligned}
 q(x_{1:T} \mid x_{0}) = \prod_{t = 1} ^T q(x_{t} \mid x_{t-1}) \quad \quad (2a)  \\ 
 q(x_{t} \mid x_{t-1}) =\mathcal{ N}(x_{t} ;\; \sqrt{1-\beta_{t}}\: x_{t-1} , \;\beta_{t}I ) \quad (2b)
-\end{align}
+\end{aligned}
 $$
 
 Equation 2b defines how the Markov chain can be calculated using fixed gaussian noise to attain noisier versions of the data $x_{0}$ for a given time stamp $t$. 
@@ -49,12 +49,12 @@ $$
 
 Having that sorted we can now move on to the following start:
 $$
-\begin{align}  \\ 
+\begin{aligned}  \\ 
  \log(\: p_{\theta}(x_{0})\:)  & =  log(\: p_{\theta}(x_{0})) \cdot \int q(x_{1:T}) \: dx_{1:T} \\
  &= \int log(\: p_{\theta}(x_{0})) \cdot q(x_{1:T}) \: dx_{1:T}  \\  
  &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]  \qquad \qquad \\
 
-\end{align} \qquad(3a)
+\end{aligned} \qquad(3a)
 $$
 
 Using Conditional Probability we can write 
@@ -63,50 +63,50 @@ $$
 $$
 and after substituting Back into (3) and then multiplying by $\frac{q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0})}$ we get
 $$
-\begin{align}  \\
+\begin{aligned}  \\
  &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T})}{p_{\theta}(x_{1:T} \mid x_{0})} \cdot \frac{q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0})} )\:]  \\ \\
  &=\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) \cdot q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0}) \cdot p_{\theta}(x_{1:T} \mid x_{0})} )\:] 
-\end{align} \qquad (3b) 
+\end{aligned} \qquad (3b) 
 
 $$
 To Further simplify we can split Expectation into two terms
 
 $$
-\begin{align}  \\
+\begin{aligned}  \\
  &=\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} +\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{q(x_{1:T} \mid x_{0}) }{p_{\theta}(x_{1:T} \mid x_{0})})\:] }_{D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0}))} \\ \\ 
  &=\underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} + D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0}))
-\end{align} \qquad (3c)
+\end{aligned} \qquad (3c)
 $$
 
 Here the Second term is The KL divergence and it has a property that : 
 $$
-\begin{align} \\
+\begin{aligned} \\
 D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0})) \geq 0
-\end{align} 
+\end{aligned} 
 $$
 This fact then can be used to relate $\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$ with ELBO and KL divergence as follows by rearranging
 $$
-\begin{align} \\ \\
+\begin{aligned} \\ \\
  \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]   - \:ELBO &=  \: D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0})) \:  \\ 
 \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]   - \:ELBO &\geq 0 \\
 \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]   &\geq ELBO \\
-\end{align} \qquad (3d)
+\end{aligned} \qquad (3d)
 $$
 The gap between $\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$ and ELBO is defined as the tightness of the bound. Additionally since the KL Divergence determines the divergence between the posterior (Q) and prior(P) distributions the tighter the bound the better it approximates between the two distributions. This can be done by Maximising the ELBO. However we can do a trick to instead minimise the bound by multiplying by a negative sign. This makes it easier in PyTorch to Train 
 $$
-\begin{align} \\
+\begin{aligned} \\
 \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0})\:)\:]   &\geq \underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: \log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{ELBO} \\ \\
 \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: -\log(\:p_{\theta}(x_{0})\:)\:]   &\leq \underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: -\log(\: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})})\:]}_{-ELBO} \\ \\
-\end{align} \qquad (3e)
+\end{aligned} \qquad (3e)
 $$
 This is the same as the Equation 3 in the Denoising Diffusion Probabilistic Model Paper. We can then use Equation 1b and 2a to write the parts of the ELBO as follows
 $$
-\begin{align} \\
+\begin{aligned} \\
 \mathbb{E}_{q(x_{1:T} \mid x_{0})}[\: -\log(\:p_{\theta}(x_{0})\:)\:]   &\leq \underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ \: -\log\left( \: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})} \right)\: \right]}_{ELBO} \\  \\
 
 &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log\left(  p(x_{T})\prod_{t = 1} ^T \frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t} \mid x_{t-1})} \right) \right] \\ \\ \\
 &= \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log(  p(x_{T})) - \sum_{t\geq 1} \log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t} \mid x_{t-1})} \right] = L
-\end{align} \qquad (3f)$$
+\end{aligned} \qquad (3f)$$
 #### The Reparametrisation Trick
 The authors of the Auto-encoding Variational Bayes , suggest a Trick to solve the problem when backpropogating through the network. Since the ELBO is an Expectation taken w.r.t the distribution $q(x_{1:T} \mid x_{0})$ , calculating  gradients  for the parameters associated  with prior distribution are  difficult to obtain but in the case of continuous latent variables they suggest reparametrisation. This is because of the stochastic nature of the Latents which prevents backpropgation and gradient calculation of the node in the graph. 
 
@@ -150,7 +150,7 @@ $$
 ### Reformulation for Efficient Training
 The DDPM paper further optimises the Loss L to allow for better training. We First revisit 3f.
 $$
-\begin{align}
+\begin{aligned}
 	L &=  \underbrace{\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ \: -\log\left( \: \frac{p_{\theta}(x_{0:T}) }{q(x_{1:T} \mid x_{0})} \right)\: \right]}_{ELBO} \\  
 	&=\mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log(  p(x_{T})) - \sum_{t\geq 1} \log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t} \mid x_{t-1})} \right]  \\  
 	&= \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[ -\log(  p(x_{T})) - \sum_{t > 1} \log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t} \mid x_{t-1})}- \log\left( \frac{p_{\theta}(x_{0} \mid x_{1})}{ q(x_{1} \mid x_{0})} \right) \; \right]  \qquad (5a)\\ \\ 
@@ -164,7 +164,7 @@ $$
 	
 &\sum_{t > 1} \left[\log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t-1}\mid x_{t},x_{0})}\cdot \frac{q(x_{t-1}\mid x_{0})}{q(x_{t}\mid x_{0}) })\right] = \sum_{t > 1} \left[\log(\frac{p_{\theta}(x_{t-1} \mid x_{t})}{ q(x_{t-1}\mid x_{t},x_{0})}) \right] +\sum_{t > 1} \left[\log(\frac{q(x_{t-1}\mid x_{0})}{q(x_{t}\mid x_{0}) }) \right] \\ \\
 	
-\end{align}
+\end{aligned}
 $$
 The right hand side of the summation can further be then simplified as it is a telescoping series.
 $$
