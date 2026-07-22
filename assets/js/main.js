@@ -42,9 +42,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const finePointer = window.matchMedia('(pointer: fine)').matches;
 
     if (dot && finePointer) {
+        let cursorX = 0, cursorY = 0, cursorQueued = false;
         document.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+            if (!cursorQueued) {
+                cursorQueued = true;
+                requestAnimationFrame(() => {
+                    dot.style.transform = 'translate(' + cursorX + 'px,' + cursorY + 'px)';
+                    cursorQueued = false;
+                });
+            }
         });
         document.querySelectorAll('a, button').forEach(el => {
             el.addEventListener('mouseenter', () => dot.classList.add('hover'));

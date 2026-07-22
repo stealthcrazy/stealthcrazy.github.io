@@ -25,11 +25,28 @@
     --btn-border: rgba(58, 53, 48, 0.25);
 }
 
-/* Seamless theme crossfade: every element that shows a themed
-   colour transitions its colour/background/border together. */
-*,
-*::before,
-*::after {
+/* Seamless theme crossfade — scoped to the elements that actually
+   change colour on theme toggle. Applying this to every node (incl.
+   the hundreds of KaTeX spans) is what caused the lag. */
+body,
+#container,
+.blog-post,
+.title,
+.meta,
+.content,
+.content p,
+.content h2,
+.content blockquote,
+.code-block,
+.code-block code,
+.menu-link,
+.bar,
+#menu,
+#hamburger,
+#theme-toggle,
+#anim-toggle,
+.copy-btn,
+#cursor-dot {
     transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
@@ -59,12 +76,15 @@ body {
 ========================================================= */
 #cursor-dot {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 8px;
     height: 8px;
+    margin: -4px 0 0 -4px; /* centre without transform so JS owns transform */
     background: var(--text);
     border-radius: 50%;
     pointer-events: none;
-    transform: translate(-50%, -50%);
+    will-change: transform;
     z-index: 9999;
     transition: width 0.15s ease, height 0.15s ease, border-radius 0.15s ease,
                 background-color 0.5s ease;
@@ -271,16 +291,10 @@ body {
     color: var(--text);
 }
 
+/* Reveal animation removed — content is always visible. */
 .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.show {
-    font-size: 1.5em;
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
 }
 
 .post-image { margin: 30px 0; text-align: center; }
@@ -368,26 +382,16 @@ body {
     font-size: 12px;
     font-family: 'Courier New', Courier, monospace;
 }
+/* KaTeX math sizing (this site uses KaTeX, not MathJax) */
 .katex-display {
-    font-size: 0.75em;          /* was ~1.21em default; matches body */
-    overflow-x: auto;         /* wide equations scroll instead of overflowing */
+    font-size: 0.85em;        /* smaller than default ~1.21em */
+    overflow-x: auto;         /* only wide equations scroll; auto hides bar when it fits */
     overflow-y: hidden;
     padding: 4px 0;
 }
 
 .katex {
-    font-size: 0.76em;           /* inline math matches surrounding text */
-}
-.code-block, mjx-container {
-    overflow-x: auto;   /* not "scroll" — auto hides the bar when it fits */
-    font-size: 0.85rem; /* smaller; tune to taste */
-}
-
-/* MathJax display equations specifically */
-mjx-container[display="true"] {
-    overflow-x: auto;
-    overflow-y: hidden;
-    font-size: 0.9em;
+    font-size: 0.9em;         /* inline math close to surrounding text */
 }
 
 /* =========================================================
