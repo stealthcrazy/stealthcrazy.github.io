@@ -378,7 +378,17 @@ body {
 .katex {
     font-size: 0.76em;           /* inline math matches surrounding text */
 }
+.code-block, mjx-container {
+    overflow-x: auto;   /* not "scroll" — auto hides the bar when it fits */
+    font-size: 0.85rem; /* smaller; tune to taste */
+}
 
+/* MathJax display equations specifically */
+mjx-container[display="true"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 0.9em;
+}
 
 /* =========================================================
    Reduced motion

@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    /* ---------- mark JS active so hidden-state CSS only applies when JS runs ---------- */
-    document.documentElement.classList.add('js-enabled');
-
     /* ---------- prefs (cookies; work in private mode too) ---------- */
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -58,43 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.documentElement.classList.add('no-custom-cursor');
     }
 
-    /* ---------- scroll reveal ---------- */
-    const revealEls = document.querySelectorAll('.reveal');
-    const animOff = getCookie('anim') === 'off' || prefersReduced;
-
-    function revealAll() {
-        revealEls.forEach(el => el.classList.add('show'));
-    }
-
-    if (animOff || !('IntersectionObserver' in window)) {
-        // No animation wanted, or observer unsupported: show everything immediately.
-        revealAll();
-    } else {
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-
-        revealEls.forEach(el => revealObserver.observe(el));
-
-        // Safety net: if anything is still hidden shortly after load
-        // (e.g. tall block that never crossed threshold), force it visible.
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                revealEls.forEach(el => {
-                    const r = el.getBoundingClientRect();
-                    if (r.top < window.innerHeight && !el.classList.contains('show')) {
-                        el.classList.add('show');
-                    }
-                });
-            }, 400);
-        });
-    }
-
     /* ---------- copy buttons on code blocks ---------- */
     document.querySelectorAll('.code-block').forEach(block => {
         const code = block.querySelector('code');
@@ -130,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ---------- typewriter ---------- */
+    const animOff = getCookie('anim') === 'off' || prefersReduced;
+
     function typeWriter(el) {
         const text = el.getAttribute('data-typewriter') || el.textContent;
         const speed = parseInt(el.getAttribute('data-speed'), 10) || 60;
@@ -170,8 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const off = getCookie('anim') === 'off';
             setCookie('anim', off ? 'on' : 'off');
             reflect();
-            // Ensure content is visible regardless of new state.
-            revealAll();
             typeTargets.forEach(el => {
                 el.textContent = el.getAttribute('data-typewriter') || el.textContent;
                 el.classList.remove('typing');
