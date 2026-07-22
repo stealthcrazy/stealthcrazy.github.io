@@ -17,18 +17,28 @@
       href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     <script defer
         src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-    <script defer
-        src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-        onload="renderMathInElement(document.body, {
-  delimiters: [
-    {left: '$$', right: '$$', display: true},
-    {left: '\\[', right: '\\]', display: true},
-    {left: '\\(', right: '\\)', display: false},
-    {left: '$',  right: '$',  display: false}
-  ],
-  ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-  strict: false,
-  throwOnError: false
-});"></script>
+    <script>
+      // Render math from kramdown's <script type="math/tex"> tags.
+      // This does NOT depend on $$ delimiters surviving Markdown, so it is
+      // robust to how Obsidian/kramdown space and reflow the source.
+      window.addEventListener('DOMContentLoaded', function () {
+        function renderAll() {
+          if (typeof katex === 'undefined') { setTimeout(renderAll, 50); return; }
+          var nodes = document.querySelectorAll('script[type^="math/tex"]');
+          nodes.forEach(function (node) {
+            var display = node.type.indexOf('mode=display') !== -1;
+            var tex = node.textContent;
+            var span = document.createElement('span');
+            try {
+              katex.render(tex, span, { displayMode: display, throwOnError: false, strict: false });
+            } catch (e) {
+              span.textContent = tex;
+            }
+            node.parentNode.replaceChild(span, node);
+          });
+        }
+        renderAll();
+      });
+    </script>
   </body>
 </html>
