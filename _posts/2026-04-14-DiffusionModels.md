@@ -384,7 +384,7 @@ Now we can write the following which gets a bit intense and long.
 $$
 
 
-{\small
+\small{
 
 \begin{aligned}
 
@@ -471,7 +471,7 @@ $$
 	q(x_{t-1}\mid x_{t},x_{0}) &=  \frac{1}{\sqrt{ \left( \frac{2\pi (1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{(1-\bar{\alpha_{t}})}  \right)^k }}\exp\left(     \frac{-1}{
 	2\left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)
 	} \cdot
-	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \\\right) 
+	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \right) 
 	
 \end{aligned}
 }
