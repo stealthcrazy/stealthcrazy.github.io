@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Building a Diffusion Model from Scratch"
 tags: [diffusion-models, deep-learning]
 ---
