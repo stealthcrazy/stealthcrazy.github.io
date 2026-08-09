@@ -384,7 +384,7 @@ body {
 }
 /* KaTeX math sizing (this site uses KaTeX, not MathJax) */
 .katex-display {
-    font-size: 0.85em;        /* smaller than default ~1.21em */
+    font-size: 0.85rem;        /* smaller than default ~1.21em */
     overflow-x: auto;         /* only wide equations scroll; auto hides bar when it fits */
     overflow-y: hidden;
     padding: 4px 0;
