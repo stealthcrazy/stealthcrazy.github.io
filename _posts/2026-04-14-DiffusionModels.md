@@ -20,7 +20,7 @@ $$
 \end{aligned}
 $$
 
-Here $x_{1} \dots x_{T}$ are known as the Latents which have the same dimensions as the data/ image we begin with ( $x_{0}$ ).Moving on, $p_{\theta}(x_{0:T})$ is a joint distribution of all the latents and is referred to as the reverse process.  Specifically Equation 1 states  that to get back original $p_{\theta}(x_{0})$ we should integrate over all latents to eliminate the from the joint distribution $p_{\theta}(x_{0:T})$ which is intractable . Additionally the reverse process is a Markov Chain with learnt transitions( Gaussian based ) starting at $p(x_{T}) = \mathcal{N}(x_{T};0,I)$ so can be defined as the following
+Here $$x_{1} \dots x_{T}$$ are known as the Latents which have the same dimensions as the data/ image we begin with ( $x_{0}$ ).Moving on, $p_{\theta}(x_{0:T})$ is a joint distribution of all the latents and is referred to as the reverse process.  Specifically Equation 1 states  that to get back original $p_{\theta}(x_{0})$ we should integrate over all latents to eliminate the from the joint distribution $p_{\theta}(x_{0:T})$ which is intractable . Additionally the reverse process is a Markov Chain with learnt transitions( Gaussian based ) starting at $p(x_{T}) = \mathcal{N}(x_{T};0,I)$ so can be defined as the following
 
 $$
 \begin{aligned}
