@@ -452,7 +452,7 @@ $$
 \end{aligned}
 $$
 
-Here $$\epsilon_{\theta}$$ is the noise the model predicts for the reverse process and depends $$\epsilon$,$x_{0},x_{t}$$. Specifically this reparametrisation to handle the stochastic problem in backpropgation.
+Here $$\epsilon_{\theta}$$ is the noise the model predicts for the reverse process and depends $$\epsilon$$,$$x_{0},x_{t}$$. Specifically this reparametrisation to handle the stochastic problem in backpropgation.
 
 $$
 \small{
