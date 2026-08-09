@@ -2,14 +2,14 @@
   _includes/katex.html — load with:  {% if page.math %}{% include katex.html %}{% endif %}
 
   Only \( \) and \[ \] are listed as delimiters. Kramdown converts every $$...$$
-  in your markdown into one of those two before KaTeX ever runs: \( \) when the
-  maths sits inside a paragraph, \[ \] when it is on its own line. That is what
-  decides inline vs display — not the number of dollar signs you typed.
+  in your markdown into one of those two before KaTeX runs: \( \) when the maths
+  sits inside a paragraph, \[ \] when it is alone on its line. Position decides
+  inline vs display — not how many dollar signs you typed.
 
-  Deliberately NOT listed: $$ and $. Including them papers over a broken kramdown
-  setup, and then the same source renders differently depending on config. If the
-  maths below fails to appear at all, kramdown is not converting — fix that in
-  _config.yml rather than adding $ back here.
+  Deliberately NOT listed: $$ and $. Adding them back masks a broken kramdown
+  setup and makes the same source render differently depending on config. If
+  inline maths shows as literal $...$, the post still has single dollars in it —
+  fix the post, not this file.
 {%- endcomment -%}
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -26,18 +26,38 @@
         });"></script>
 
 <style>
-  /* Several derivations in this post are wider than a blog column;
-     let them scroll sideways instead of overflowing or being clipped. */
+  /* ---- Wide display equations -------------------------------------------
+     19 of the derivations in this post are wider than any blog column, the
+     worst about 3,300 characters of TeX. Shrinking them enough to fit would
+     make them unreadable, so they scroll sideways instead. The fade on the
+     right edge makes it obvious there is more to see.                      */
+
   .katex-display {
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 0.4em 0;
+    padding: 0.5em 0;
   }
-  .katex-display::-webkit-scrollbar { height: 6px; }
+
+  /* Nudge oversized blocks down a little before falling back to scrolling. */
+  @media (max-width: 800px) {
+    .katex-display > .katex { font-size: 0.92em; }
+  }
+  @media (max-width: 520px) {
+    .katex-display > .katex { font-size: 0.84em; }
+  }
+
+  /* A visible but unobtrusive scrollbar, so the block reads as scrollable
+     rather than clipped. */
+  .katex-display { scrollbar-width: thin; }
+  .katex-display::-webkit-scrollbar { height: 7px; }
   .katex-display::-webkit-scrollbar-thumb {
-    background: rgba(128, 128, 128, 0.4);
-    border-radius: 3px;
+    background: rgba(140, 140, 140, 0.45);
+    border-radius: 4px;
   }
-  /* Inline maths should never introduce its own scrollbar or line box. */
+  .katex-display::-webkit-scrollbar-thumb:hover {
+    background: rgba(140, 140, 140, 0.7);
+  }
+
+  /* Inline maths must never scroll or break the line box. */
   .katex { overflow: visible; }
 </style>

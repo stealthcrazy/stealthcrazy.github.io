@@ -7,6 +7,7 @@ tags: [diffusion, ddpm, pytorch, maths]
 math: true
 ---
 
+{% raw %} 
 
 ### Introduction
 In this Post , I will be  documenting my journey researching Diffusion Models for Image Generation.As of writing this first post I am a first year UG studying CS and and first time working with LaTex.   Particularly, I will go into understanding the Mathematics behind the Model , Building the architecture in PyTorch and discussing how to undertake training the models on datasets like CIFAR10 and CELEB-A 128x128. Additionally, I will try to not take any shortcuts and showcase how equations were derived from my perspective.However there is a lot to cover and will be prone to mistakes.
@@ -20,7 +21,7 @@ $$
 \end{aligned}
 $$
 
-Here $$x_{1} \dots x_{T}$$ are known as the Latents which have the same dimensions as the data/ image we begin with ( $x_{0}$ ).Moving on, $p_{\theta}(x_{0:T})$ is a joint distribution of all the latents and is referred to as the reverse process.  Specifically Equation 1 states  that to get back original $p_{\theta}(x_{0})$ we should integrate over all latents to eliminate the from the joint distribution $p_{\theta}(x_{0:T})$ which is intractable . Additionally the reverse process is a Markov Chain with learnt transitions( Gaussian based ) starting at $p(x_{T}) = \mathcal{N}(x_{T};0,I)$ so can be defined as the following
+Here $$x_{1} \dots x_{T}$$ are known as the Latents which have the same dimensions as the data/ image we begin with ( $$x_{0}$$ ).Moving on, $$p_{\theta}(x_{0:T})$$ is a joint distribution of all the latents and is referred to as the reverse process.  Specifically Equation 1 states  that to get back original $$p_{\theta}(x_{0})$$ we should integrate over all latents to eliminate the from the joint distribution $$p_{\theta}(x_{0:T})$$ which is intractable . Additionally the reverse process is a Markov Chain with learnt transitions( Gaussian based ) starting at $$p(x_{T}) = \mathcal{N}(x_{T};0,I)$$ so can be defined as the following
 
 $$
 \begin{aligned}
@@ -29,7 +30,7 @@ p_{\theta}(x_{t-1} \mid x_{t}) =\mathcal{ N}(x_{t-1} ;\; \mu_{\theta}( x_{t},t) 
 \end{aligned}
 $$
 
-The key differentiator for a diffusion model to that of a latent is the forward process ( Diffusion ) which is a fixed Markov chain that repeatedly adds noise to the data/image. The forward process is analogous to brownian motion in the idea that the image gets noisier with each time step in the forward diffusion process due to the variance scheduling of $\beta_{1} \dots \beta_{T}$ .  Below in Equation 2a is the definition of the forward process .
+The key differentiator for a diffusion model to that of a latent is the forward process ( Diffusion ) which is a fixed Markov chain that repeatedly adds noise to the data/image. The forward process is analogous to brownian motion in the idea that the image gets noisier with each time step in the forward diffusion process due to the variance scheduling of $$\beta_{1} \dots \beta_{T}$$ .  Below in Equation 2a is the definition of the forward process .
 
 $$
 \begin{aligned}
@@ -38,7 +39,7 @@ q(x_{t} \mid x_{t-1}) =\mathcal{ N}(x_{t} ;\; \sqrt{1-\beta_{t}}\: x_{t-1} , \;\
 \end{aligned}
 $$
 
-Equation 2b defines how the Markov chain can be calculated using fixed gaussian noise to attain noisier versions of the data $x_{0}$ for a given time stamp $t$. 
+Equation 2b defines how the Markov chain can be calculated using fixed gaussian noise to attain noisier versions of the data $$x_{0}$$ for a given time stamp $t$. 
 
 Moving on to Training, since marginalisation of the joint probability distribution (Equation 1a) is not possible we look at the negative log likelihood instead. Below is derivation i wrote in LaTex following the steps for Evidence Lower Bound (ELBO) .
 
@@ -76,7 +77,7 @@ $$
  p_{\theta}(x_{0}) =  \frac{p_{\theta}(x_{0:T})}{p_{\theta}(x_{1:T} \mid x_{0})}
 $$
 
-and after substituting Back into (3) and then multiplying by $\frac{q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0})}$ we get
+and after substituting Back into (3) and then multiplying by $$\frac{q(x_{1:T} \mid x_{0})}{q(x_{1:T} \mid x_{0})}$$ we get
 
 $$
 \begin{aligned}  \\
@@ -102,7 +103,7 @@ D_{KL}(q(x_{1:T} \mid x_{0})\:  \mid  \mid  \: p_{\theta}(x_{1:T} \mid x_{0})) \
 \end{aligned} 
 $$
 
-This fact then can be used to relate   $\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$   with ELBO and KL divergence as follows by rearranging
+This fact then can be used to relate   $$\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$$   with ELBO and KL divergence as follows by rearranging
 
 $$
 \begin{aligned} \\ \\
@@ -112,7 +113,7 @@ $$
 \end{aligned} \qquad (3d)
 $$
 
-The gap between  $\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$   and ELBO is defined as the tightness of the bound. Additionally since the KL Divergence determines the divergence between the posterior (Q) and prior(P) distributions the tighter the bound the better it approximates between the two distributions. This can be done by Maximising the ELBO. However we can do a trick to instead minimise the bound by multiplying by a negative sign. This makes it easier in PyTorch to Train 
+The gap between  $$\mathbb{E}_{q(x_{1:T} \mid x_{0})}[\:\log(\:p_{\theta}(x_{0:T})\:)\:]$$   and ELBO is defined as the tightness of the bound. Additionally since the KL Divergence determines the divergence between the posterior (Q) and prior(P) distributions the tighter the bound the better it approximates between the two distributions. This can be done by Maximising the ELBO. However we can do a trick to instead minimise the bound by multiplying by a negative sign. This makes it easier in PyTorch to Train 
 
 $$
 \begin{aligned} \\
@@ -133,9 +134,9 @@ $$
 $$
 
 #### The Reparametrisation Trick
-The authors of the Auto-encoding Variational Bayes , suggest a Trick to solve the problem when backpropogating through the network. Since the ELBO is an Expectation taken w.r.t the distribution $q(x_{1:T} \mid x_{0})$ , calculating  gradients  for the parameters associated  with prior distribution are  difficult to obtain but in the case of continuous latent variables they suggest reparametrisation. This is because of the stochastic nature of the Latents which prevents backpropgation and gradient calculation of the node in the graph. 
+The authors of the Auto-encoding Variational Bayes , suggest a Trick to solve the problem when backpropogating through the network. Since the ELBO is an Expectation taken w.r.t the distribution $$q(x_{1:T} \mid x_{0})$$ , calculating  gradients  for the parameters associated  with prior distribution are  difficult to obtain but in the case of continuous latent variables they suggest reparametrisation. This is because of the stochastic nature of the Latents which prevents backpropgation and gradient calculation of the node in the graph. 
 
-This can be done by introducing a new random variable $\epsilon \sim \mathcal{N}(0,I)$ and this can then be used  as follows for equation 2b: 
+This can be done by introducing a new random variable $$\epsilon \sim \mathcal{N}(0,I)$$ and this can then be used  as follows for equation 2b: 
 
 $$
 \begin{aligned}
@@ -154,7 +155,7 @@ Mean &= \sqrt{ \bar{\alpha_{t}}}x_{0}  \qquad Var = \left[\sum_{k=1}^t \:\frac{\
 \end{aligned}
 $$
 
-The Mean is taken directly from the expanded relation for $x_{t}$ and the Variance for the sum of independent multivariate Gaussians (sampled from Normal : $\epsilon \sim \mathcal{N}(0,I)$) is the sum of individual variances and hence $Var = \sum_{k=1}^t \:\frac{\bar{\alpha_{t}}}{\bar{\alpha_{k}}}  \cdot \beta_{k}$ . This can be then further simplified :
+The Mean is taken directly from the expanded relation for $x_{t}$ and the Variance for the sum of independent multivariate Gaussians (sampled from Normal : $$\epsilon \sim \mathcal{N}(0,I)$$) is the sum of individual variances and hence $$Var = \sum_{k=1}^t \:\frac{\bar{\alpha_{t}}}{\bar{\alpha_{k}}}  \cdot \beta_{k}$$ . This can be then further simplified :
 
 $$
 \begin{aligned}
@@ -264,7 +265,7 @@ $$
 \end{aligned} (5e)
 $$
 
-And the Last Part of the Expectation in 5c can't be simplified to a KL divergence but the same trick can be applied to integrate out all latent variables the Expectation is taken w.r.t to get $\mathbb{E}_{q(x_{1} \mid x_{0})}\left[- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \;\right]$ . 
+And the Last Part of the Expectation in 5c can't be simplified to a KL divergence but the same trick can be applied to integrate out all latent variables the Expectation is taken w.r.t to get $$\mathbb{E}_{q(x_{1} \mid x_{0})}\left[- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right) \;\right]$$ . 
 
 Moreover, The reason I showcased this instead of jumping directly to the result showcased in the paper is to make it more intuitive as to why the KL divergences  show up. We can now write all the expectations together under the entire distribution q by re-integrating the missing variables  as they can be marginalised if needed by doing the same trick of integrating out. So 5c becomes the following when we combine each intermediate stage.
 
@@ -274,9 +275,9 @@ $$\begin{aligned}
 \end{aligned} (5f)
 $$
 
-My reason to why this is important is that it is tractable(because we specifically condition on $x_{0}$ ) to train a model based on this result. This is because the minimising the individual KL divergences for a time step t(this can be done by choosing a random t) is efficient to do rather than all possible t's . Additionally, since we are working with Gaussian distributions we can easily minimise the KL divergences which i will showcase next. This results in less noisy estimates than those if we were to compute via monte-carlo estimates for the entire time steps.
+My reason to why this is important is that it is tractable(because we specifically condition on $$x_{0}$$ ) to train a model based on this result. This is because the minimising the individual KL divergences for a time step t(this can be done by choosing a random t) is efficient to do rather than all possible t's . Additionally, since we are working with Gaussian distributions we can easily minimise the KL divergences which i will showcase next. This results in less noisy estimates than those if we were to compute via monte-carlo estimates for the entire time steps.
 
-Moving on we need to find the distribution of   $q(x_{t-1}\mid x_{t},x_{0})$. Here we can relate back to the Baye's rule in (5a)
+Moving on we need to find the distribution of   $$q(x_{t-1}\mid x_{t},x_{0})$$. Here we can relate back to the Baye's rule in (5a)
 
 $$
 \begin{aligned}
@@ -364,7 +365,7 @@ K_{3}  &= \left[x_{t}^2\left( \frac{1}{1-\alpha_{t}}-\frac{1}{1-\bar{\alpha_{t}}
 }
 $$
 
-The coefficients in K3 are same for K5 and hence $K_{3}+K_{5} = 0$ . Therefore we can write $H_{2}$ as follows:
+The coefficients in K3 are same for K5 and hence $$K_{3}+K_{5} = 0$$ . Therefore we can write $$H_{2}$$ as follows:
 
 $$
 \small{
@@ -408,9 +409,9 @@ $$
 \mathbb{E}_{q(x_{1:T} \mid x_{0})}\left[\underbrace{D_{KL}(q(x_{T} \mid x_{0}) \mid\mid p(x_{T}))}_{L_{T}} + \sum_{t > 1}  \underbrace{D_{KL}(q(x_{t-1}\mid x_{t},x_{0})\mid \mid p_{\theta}(x_{t-1} \mid x_{t}))}_{L_{t-1}}\; \underbrace{- \log\left( p_{\theta}(x_{0} \mid x_{1}) \right)}_{L_{0}}\right]
 $$ 
 
-Here $L_{T}$ is essentially constant because $p(x_{T}) =\mathcal{N}(0,I)$ and doesn't depend on the parameters $\theta$.Therefore we can do no gradient updates. Additionally, $L_{0}$ can be ignored as it contributes very little to overall gradient update.
+Here $$L_{T}$$ is essentially constant because $$p(x_{T}) =\mathcal{N}(0,I)$$ and doesn't depend on the parameters $$\theta$$.Therefore we can do no gradient updates. Additionally, $$L_{0}$$ can be ignored as it contributes very little to overall gradient update.
 
-Moving on we can now look at $L_{t-1}$ which can be used for training. Ideally we reverse process $p_{\theta}$ to have the same variance as the forward process to minimise the Divergence $p_{\theta}$ between reverse  and forward $q$  processes. Therefore we fix the reverses Variance $\Sigma_{\theta}( x_{t},t) \: =\sigma^2I=\tilde{\beta_{t}}I$. I used this relation when building my model, however the authors of DDPM suggest that $\Sigma_{\theta}( x_{t},t) \: =\sigma^2I=\beta_{t}I$ also works similarly. Moving on we need to look at the KL divergence relationship between multivariable Gaussians. The proof is a bit of a small tangent to write about here, so i suggest looking at the references. In the future I will possibly do a post documenting it. Below I state the KL divergence formula we are going to use.
+Moving on we can now look at $$L_{t-1}$$ which can be used for training. Ideally we reverse process $$p_{\theta}$$ to have the same variance as the forward process to minimise the Divergence $$p_{\theta}$$ between reverse  and forward $q$  processes. Therefore we fix the reverses Variance $$\Sigma_{\theta}( x_{t},t) \: =\sigma^2I=\tilde{\beta_{t}}I$$. I used this relation when building my model, however the authors of DDPM suggest that $$\Sigma_{\theta}( x_{t},t) \: =\sigma^2I=\beta_{t}I$$ also works similarly. Moving on we need to look at the KL divergence relationship between multivariable Gaussians. The proof is a bit of a small tangent to write about here, so i suggest looking at the references. In the future I will possibly do a post documenting it. Below I state the KL divergence formula we are going to use.
 
 $$
 \begin{aligned}
@@ -421,7 +422,7 @@ $$
 \end{aligned}
 $$
 
-We can now use this to find $D_{KL}(q(x_{t-1}\mid x_{t},x_{0})\mid \mid p_{\theta}(x_{t-1} \mid x_{t})$ 
+We can now use this to find $$D_{KL}(q(x_{t-1}\mid x_{t},x_{0})\mid \mid p_{\theta}(x_{t-1} \mid x_{t})$$
 
 $$
 \begin{aligned}
@@ -443,7 +444,7 @@ $$
 \end{aligned} }
 $$
 
-We can now substitute previous results for $\tilde{\mu_{t}}(x_{t},x_{0})$ and rearrange (4c) to get $x_{0} = \frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon)\right]$. Additionally for a ideal $\mu_{\theta}(x_{t},t)$ we want it to be equal to $\tilde{\mu_{t}}(x_{t},x_{0})$. Using this we can do the following 
+We can now substitute previous results for $$\tilde{\mu_{t}}(x_{t},x_{0})$$ and rearrange (4c) to get $$x_{0} = \frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon)\right]$$. Additionally for a ideal $$\mu_{\theta}(x_{t},t)$$ we want it to be equal to $$\tilde{\mu_{t}}(x_{t},x_{0})$$. Using this we can do the following 
 
 $$
 \begin{aligned}
@@ -451,7 +452,7 @@ $$
 \end{aligned}
 $$
 
-Here $\epsilon_{\theta}$ is the noise the model predicts for the reverse process and depends $\epsilon$,$x_{0},x_{t}$. Specifically this reparametrisation to handle the stochastic problem in backpropgation.
+Here $$\epsilon_{\theta}$$ is the noise the model predicts for the reverse process and depends $$\epsilon$,$x_{0},x_{t}$$. Specifically this reparametrisation to handle the stochastic problem in backpropgation.
 
 $$
 \small{
@@ -476,7 +477,7 @@ $$
 \end{aligned}}
 $$
 
-Since we there is an expectation enclosing the KL divergence we can write.Note since Expectation and  Summation are linear operators I have brought the Expectation inside the Summation here for $L_{t-1}$.
+Since we there is an expectation enclosing the KL divergence we can write.Note since Expectation and  Summation are linear operators I have brought the Expectation inside the Summation here for $$L_{t-1}$$.
 
 $$
 \begin{aligned}
@@ -485,10 +486,13 @@ $$
 \end{aligned}
 $$
 
-Additionally, the above is just a result due to reparametrisation. Due to the expectation now being Independent of $\theta$ we can bring the Gradient operator($\nabla_{\theta}$) inside and drop the constant.
+Additionally, the above is just a result due to reparametrisation. Due to the expectation now being Independent of $$\theta$$ we can bring the Gradient operator($$\nabla_{\theta}$$) inside and drop the constant.
 
 $$
 \nabla_{\theta}(\left\lvert  \left\lvert (\epsilon-\epsilon_{\theta})  \right\rvert   \right\rvert^2)
 $$
 
 #### Training Loop
+
+
+{% end raw %} 
