@@ -35,7 +35,12 @@ body,
 .meta,
 .content,
 .content p,
+.content h1,
 .content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
 .content blockquote,
 .code-block,
 .code-block code,
@@ -274,12 +279,62 @@ body {
 
 .content p { margin-bottom: 20px; font-size: 1.2rem; }
 
-.content h2 {
-    font-size: 1.8em;
-    margin: 30px 0 15px 0;
+/* Type scale.
+   Body copy is 1.2rem, so h3 (browser default 1.17em) and h4 (1em) were
+   rendering SMALLER than the paragraphs around them. This post uses ### and
+   #### throughout, so every level is set explicitly. Sizes are in rem to stay
+   independent of whatever the parent font-size happens to be. */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
     color: var(--text);
     font-weight: 300;
+    line-height: 1.25;
+    /* Courier is wide; tighten slightly so long headings hold together. */
+    letter-spacing: -0.01em;
 }
+
+.content h1 { font-size: 2.6rem; margin: 3rem 0 1.2rem; }
+
+.content h2 {
+    font-size: 2rem;
+    margin: 2.8rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--accent-border);
+}
+
+/* Major sections. The hairline echoes .header and makes the jump from body
+   copy to section obvious without needing a big size step. */
+.content h3 {
+    font-size: 1.6rem;
+    margin: 2.6rem 0 0.9rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--accent-border);
+}
+
+/* Sub-sections: no rule, so the hierarchy reads at a glance. */
+.content h4 {
+    font-size: 1.3rem;
+    margin: 2rem 0 0.7rem;
+    color: var(--text-muted);
+}
+
+.content h5 { font-size: 1.1rem;  margin: 1.6rem 0 0.6rem; }
+
+.content h6 {
+    font-size: 0.95rem;
+    margin: 1.4rem 0 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+}
+
+/* A heading immediately after an equation shouldn't inherit the big top gap. */
+.content .katex-display + h3,
+.content .katex-display + h4 { margin-top: 1.6rem; }
 
 .content blockquote {
     margin: 25px 0;
@@ -382,17 +437,54 @@ body {
     font-size: 12px;
     font-family: 'Courier New', Courier, monospace;
 }
-/* KaTeX math sizing (this site uses KaTeX, not MathJax) */
-.katex-display {
-    font-size: 0.85rem;        /* smaller than default ~1.21em */
-    overflow-x: auto;         /* only wide equations scroll; auto hides bar when it fits */
+/* =========================================================
+   KaTeX (this site uses KaTeX, not MathJax)
+
+   The previous rules compounded: .katex { 0.9em } also matches the .katex
+   inside .katex-display, so display maths came out at 0.85rem x 0.9 = ~12px,
+   well under the 1.2rem body text. Inline and display are now set separately.
+========================================================= */
+
+/* Inline maths sits in a paragraph, so it must match the paragraph exactly.
+   Anything smaller reads as a different voice mid-sentence. */
+.content .katex { font-size: 1em; }
+
+.content .katex-display {
+    margin: 1.8rem 0;
+    padding: 0.4rem 0;
+    overflow-x: auto;   /* wide derivations scroll; the bar hides when they fit */
     overflow-y: hidden;
-    padding: 4px 0;
 }
 
-.katex {
-    font-size: 0.9em;         /* inline math close to surrounding text */
+/* Display maths a touch larger than body copy so it reads as a set piece. */
+.content .katex-display > .katex { font-size: 1.05em; }
+
+/* Three derivations in this post run past 2,500 characters of TeX. Nothing
+   makes those fit a column, so they scroll — but step the size down on
+   narrower viewports first, which gets most of the rest to fit. */
+@media (max-width: 1100px) {
+    .content .katex-display > .katex { font-size: 0.95em; }
 }
+@media (max-width: 768px) {
+    .content .katex-display > .katex { font-size: 0.85em; }
+}
+
+/* Make the scrollbar visible enough to read as "there is more to the right",
+   rather than looking like the equation was clipped. */
+.content .katex-display { scrollbar-width: thin; }
+.content .katex-display::-webkit-scrollbar { height: 7px; }
+.content .katex-display::-webkit-scrollbar-thumb {
+    background: var(--btn-border);
+    border-radius: 4px;
+}
+
+/* Tall inline maths (fractions, sums) would otherwise collide with the line
+   above. Paragraph leading is already 1.8; this stops the overlap without
+   loosening the whole page. */
+.content p .katex { line-height: normal; }
+
+/* KaTeX ships its own error styling; keep it inside the theme palette. */
+.content .katex-error { color: #cc5555 !important; }
 
 /* =========================================================
    Reduced motion
