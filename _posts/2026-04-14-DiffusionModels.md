@@ -1,3 +1,13 @@
+---
+layout: post
+title: "Diffusion Models"
+date: 2026-08-09
+categories: [machine-learning, diffusion-models]
+tags: [diffusion, ddpm, pytorch, maths]
+math: true
+---
+
+
 ### Introduction
 In this Post , I will be  documenting my journey researching Diffusion Models for Image Generation.As of writing this first post I am a first year UG studying CS and and first time working with LaTex.   Particularly, I will go into understanding the Mathematics behind the Model , Building the architecture in PyTorch and discussing how to undertake training the models on datasets like CIFAR10 and CELEB-A 128x128. Additionally, I will try to not take any shortcuts and showcase how equations were derived from my perspective.However there is a lot to cover and will be prone to mistakes.
 ###  Looking at Maths  Behind Diffusion Models
