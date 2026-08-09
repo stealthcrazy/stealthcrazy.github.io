@@ -8,7 +8,6 @@ kramdown:
   input: GFM
   hard_wrap: false
   math_engine: null
-  smart_quotes: false
 defaults:
   - scope:
       path: "_posts"
