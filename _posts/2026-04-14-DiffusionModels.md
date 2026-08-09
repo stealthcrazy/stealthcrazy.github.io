@@ -317,8 +317,8 @@ $$
 	-2x_{t-1}\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}\right)\cdot \left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)}_{K_{2}} + \underbrace{B\cdot \left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)}_{K_{3}} \right]
 	\\ \\
 	\text{Completing the square}\\
-	K_{2}&= x_{t-1}^2 -2x_{t-1}\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)\\
-	&= \underbrace{ \left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2}_{K_{4}} \underbrace{-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)^2}_{K_{5}} \\
+	K_{2}&= x_{t-1}^2 -2x_{t-1}\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)\\
+	&= \underbrace{ \left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \right)^2}_{K_{4}} \underbrace{-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)^2}_{K_{5}} \\
 \end{aligned}}
 $$
 
@@ -327,11 +327,12 @@ $$
 
 \begin{aligned}
 \text{Expanding K5} &\\
-K_{5} &=-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)^2 \\
+K_{5} &=-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)^2 \\
 &= - \left( \frac{ \alpha_{t} (1-\bar{\alpha_{t-1}})^2 x_{t}^2+\bar{\alpha_{t-1}} (1-\alpha_{t})^2x_{0}^2 - 2(\sqrt{ \alpha_{t} \bar{\alpha_{t-1}} }(1-\alpha_{t})(1-\bar{\alpha_{t-1}})x_{t}x_{0})}{{(1-\bar{\alpha_{t}}})^2} \right) \\
 \end{aligned}
 }
 $$
+
 $$
 {\small
 
@@ -358,11 +359,11 @@ The coefficients in K3 are same for K5 and hence $K_{3}+K_{5} = 0$ . Therefore w
 $$
 \small{
 \begin{aligned}
-	H_{2} &=  \left( \frac{1-\bar{\alpha_{t}}}{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})} \right)\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \\
+	H_{2} &=  \left( \frac{1-\bar{\alpha_{t}}}{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})} \right)\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \right)^2 \\
 	&= \frac{1}{
 	\left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)
 	}
-	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \\
+	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \right)^2 \\
 \end{aligned}}
 $$
 We can now write the following:
@@ -372,7 +373,7 @@ $$
 	q(x_{t-1}\mid x_{t},x_{0}) &=  \frac{1}{\sqrt{ \left( \frac{2\pi (1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{(1-\bar{\alpha_{t}})}  \right)^k }}\exp\left(     \frac{-1}{
 	2\left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right)
 	} \cdot
-	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \right)^2 \\\right) 
+	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \right)^2 \\\right) 
 	
 \end{aligned}
 }
@@ -383,8 +384,8 @@ We can now easily identify the variance and mean now:
 $$
 \begin{aligned}
 	Variance &= \left( \frac{(1-\alpha_{t})(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right) = \left( \frac{\beta_{t}(1-\bar{\alpha_{t-1}})}{1-\bar{\alpha_{t}}} \right) = \tilde{\beta_{t}} \\ 
-	Mean &=\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)\\
-	&=\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(\beta_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right) = \tilde{\mu}_{t}(x_{t},x_{0})\\
+	Mean &=\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)\\
+	&=\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(\beta_{t})x_{0}}{1-\bar{\alpha_{t}}} \right) = \tilde{\mu}_{t}(x_{t},x_{0})\\
 	q(x_{t-1}\mid x_{t},x_{0}) &= \mathcal{N}(x_{t-1};\tilde{\mu}_{t}(x_{t},x_{0}),\tilde{\beta_{t}}I)
 \end{aligned}
 $$
@@ -446,11 +447,11 @@ $$
 \begin{aligned}
 	\frac{1}{2}\left[ \frac{\lvert \lvert \mu_{\theta}(x_{t},t)-\tilde{\mu}_{t}(x_{t},x_{0} \rvert  \rvert^2 }{\sigma^2}\right] &= \frac{1}{2\sigma^2}\left[\left\lvert  \left\lvert  \tilde{\mu_{t}}\left(x_{t}, \frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon_{\theta})\right]\right)-\tilde{\mu}_{t}(x_{t},\frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon)\right])  \right\rvert   \right\rvert^2 \right] (6a) \\ \\
 
-\text{since we can write }\tilde{\mu_{t}}(x_{t},x_{0}) &= \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(\beta_{t})x_{0}}{{1-\bar{\alpha_{t}}}} \right)  \\
+\text{since we can write }\tilde{\mu_{t}}(x_{t},x_{0}) &= \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(\beta_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \\
 
-&=\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}}{{1-\bar{\alpha_{t}}}} + \frac{\sqrt{ \bar{\alpha_{t-1}} }(\beta_{t})}{{1-\bar{\alpha_{t}}}}\cdot \frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon)\right]  \right) \\
+&=\left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}}{1-\bar{\alpha_{t}}} + \frac{\sqrt{ \bar{\alpha_{t-1}} }(\beta_{t})}{1-\bar{\alpha_{t}}}\cdot \frac{1}{\sqrt{ \bar{\alpha_{t}} }}\left[x_{t}- (\sqrt{  1-\bar{\alpha_{t}}} \cdot \:\epsilon)\right]  \right) \\
 
-&= \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}}{{1-\bar{\alpha_{t}}}} + \frac{\beta_{t}x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right)\\
+&= \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}}{1-\bar{\alpha_{t}}} + \frac{\beta_{t}x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right)\\
 
 &= \left( \frac{\alpha_{t}(1-\bar{\alpha_{t-1}})x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }} + \frac{\beta_{t}x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }}- \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right) \\
 &=\left( \frac{(\alpha_{t}-\bar{\alpha_{t}}-1+\alpha_{t})x_{t}}{(1-\bar{\alpha_{t}})\sqrt{ \alpha_{t} }} - \frac{\beta_{t}\epsilon}{\sqrt{ 1-\bar{\alpha_{t}} }\sqrt{ \alpha_{t} }} \right)\\
