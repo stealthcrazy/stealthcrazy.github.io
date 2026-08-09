@@ -328,7 +328,7 @@ $$
 \begin{aligned}
 \text{Expanding K5} &\\
 K_{5} &=-  \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)^2 \\
-&= - \left( \frac{ \alpha_{t} (1-\bar{\alpha_{t-1}})^2 x_{t}^2+\bar{\alpha_{t-1}} (1-\alpha_{t})^2x_{0}^2 - 2(\sqrt{ \alpha_{t} \bar{\alpha_{t-1}} }(1-\alpha_{t})(1-\bar{\alpha_{t-1}})x_{t}x_{0})}{{(1-\bar{\alpha_{t}}})^2} \right) \\
+&= - \left( \frac{ \alpha_{t} (1-\bar{\alpha_{t-1}})^2 x_{t}^2+\bar{\alpha_{t-1}} (1-\alpha_{t})^2x_{0}^2 - 2(\sqrt{ \alpha_{t} \bar{\alpha_{t-1}} }(1-\alpha_{t})(1-\bar{\alpha_{t-1}})x_{t}x_{0})}{(1-\bar{\alpha_{t}})^2} \right) \\
 \end{aligned}
 }
 $$
