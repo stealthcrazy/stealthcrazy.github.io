@@ -1,0 +1,43 @@
+{%- comment -%}
+  _includes/katex.html — load with:  {% if page.math %}{% include katex.html %}{% endif %}
+
+  Only \( \) and \[ \] are listed as delimiters. Kramdown converts every $$...$$
+  in your markdown into one of those two before KaTeX ever runs: \( \) when the
+  maths sits inside a paragraph, \[ \] when it is on its own line. That is what
+  decides inline vs display — not the number of dollar signs you typed.
+
+  Deliberately NOT listed: $$ and $. Including them papers over a broken kramdown
+  setup, and then the same source renders differently depending on config. If the
+  maths below fails to appear at all, kramdown is not converting — fix that in
+  _config.yml rather than adding $ back here.
+{%- endcomment -%}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+          delimiters: [
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option'],
+          throwOnError: false,
+          errorColor: '#cc0000'
+        });"></script>
+
+<style>
+  /* Several derivations in this post are wider than a blog column;
+     let them scroll sideways instead of overflowing or being clipped. */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.4em 0;
+  }
+  .katex-display::-webkit-scrollbar { height: 6px; }
+  .katex-display::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.4);
+    border-radius: 3px;
+  }
+  /* Inline maths should never introduce its own scrollbar or line box. */
+  .katex { overflow: visible; }
+</style>

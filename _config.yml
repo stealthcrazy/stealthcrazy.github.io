@@ -7,7 +7,6 @@ markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
-  math_engine: null
 defaults:
   - scope:
       path: "_posts"
