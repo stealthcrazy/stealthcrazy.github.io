@@ -366,7 +366,9 @@ $$
 	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \right)^2 \\
 \end{aligned}}
 $$
+
 We can now write the following:
+
 $$
 \small{
 \begin{aligned}
@@ -375,8 +377,7 @@ $$
 	} \cdot
 	\left( x_{t-1} - \left( \frac{\sqrt{ \alpha_{t} }(1-\bar{\alpha_{t-1}})x_{t}+\sqrt{ \bar{\alpha_{t-1}} }(1-\alpha_{t})x_{0}}{1-\bar{\alpha_{t}}} \right)  \right)^2 \\\right) 
 	
-\end{aligned}
-}
+\end{aligned}}
 $$
 
 We can now easily identify the variance and mean now:
